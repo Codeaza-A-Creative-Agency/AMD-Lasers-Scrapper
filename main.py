@@ -63,6 +63,7 @@ class scrap:
     def save_data(self):
         data_dict={"Title":self.titles, "Seller SKU": self.skus, "Description":self.descripts, "Image URL": self.images, "Product Page URL":self.p_url}
         df= pd.DataFrame.from_dict(data_dict)
+        #droping duplicates in the dataframe
         df.drop_duplicates()
         df.to_csv("AMDlasers.csv", index=False)
 
