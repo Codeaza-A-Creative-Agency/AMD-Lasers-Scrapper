@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import json
 class scrap:
     Seller_Platform='AMD-Lasers'
-    manufacture='-1'
+    manufacture='AMD-Lasers'
     manufacture_code='-1'
     titles=[]
     Seller_SKU=[]
@@ -14,7 +14,7 @@ class scrap:
     Packaging='-1'
     Product_Page_URL=[]
     Image_URL= []
-    Att_url='-1'
+    Att_url=[]
     Attributes='-1'
     p_url=[]
     links=[]
@@ -66,6 +66,12 @@ class scrap:
                 bs= BeautifulSoup(r.content,'lxml')
                 description= bs.find('div', class_='product-description rte')
                 image= bs.findAll('img', class_='FeaturedImage-product-template product-featured-img js-zoom-enabled')
+                at_url = bs.find('a', title='Picasso Clario User Manual')
+                if at_url !=None:
+                    self.Att_url.append(at_url.get('href'))
+                else:
+                    self.Att_url.append('-1')
+                
                 for img in image:
                     imgs.append("https:"+img.get('src'))
                 self.Image_URL.append(imgs)
@@ -95,7 +101,7 @@ class scrap:
 #         print(len(self.Product_Page_URL))
 #         print(len(self.Image_URL))
 #         print(len(self.Descriptions))
-        data_dict={"Seller Platform":self.Seller_Platform, "Seller SKU":self.Seller_SKU, "Manufacture":self.manufacture,"Manufacture Code":self.manufacture_code,
+        data_dict={"Seller Platform":self.Seller_Platform, "Seller SKU":self.Seller_SKU, "Manufacture":self.manufacture,"Manufacture Code":self.Seller_SKU,
           "Product Title":self.titles,"Description":self.Descriptions,
          "Packaging":self.Packaging,"Categories":self.Categories,
           "Subcategories":self.Sub_Categories,
